@@ -32,13 +32,18 @@ HOMEWORK_VERDICTS = {
 
 def check_tokens():
     """Проверяет доступность переменных окружения."""
-    source = ("PRACTICUM_TOKEN", "TELEGRAM_TOKEN", "TELEGRAM_CHAT_ID")
-    token_list = [token for token in source if not globals()[token]]
+    source = {
+        'PRACTICUM_TOKEN': PRACTICUM_TOKEN,
+        'TELEGRAM_TOKEN': TELEGRAM_TOKEN,
+        'TELEGRAM_CHAT_ID': TELEGRAM_CHAT_ID
+    }
+    token_list = [key for key, value in source.items() if not value]
     if token_list:
-        text_error = f'''Предоставьте необходимые данные:
-        {" ".join(token_list)}'''
-        logging.critical(text_error)
-        raise TokenError(text_error)
+        error_message = 'Предоставьте необходимые данные:{tokens}'
+        print(error_message.format(tokens=["id", "settings"]))
+        logger = logging.getLogger(__name__)
+        logger.critical(error_message)
+        raise TokenError(error_message)
 
 
 def send_message(bot, message):
