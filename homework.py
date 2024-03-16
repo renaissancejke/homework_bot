@@ -9,7 +9,7 @@ import telegram
 from dotenv import load_dotenv
 from telegram.error import TelegramError
 
-from exceptions import HomeworkStatusError, KeyError, TokenError, URLError
+from exceptions import HomeworkStatusError, KeyError, URLError
 
 load_dotenv()
 
