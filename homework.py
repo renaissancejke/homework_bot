@@ -41,10 +41,7 @@ def check_tokens():
         'TELEGRAM_CHAT_ID': TELEGRAM_CHAT_ID
     }
     token_list = [key for key, value in source.items() if not value]
-    if token_list:
-        error_message = 'Предоставьте необходимые данные:{tokens}'
-        logger.critical(error_message.format(tokens=token_list))
-        return token_list
+    return token_list
 
 
 def send_message(bot, message):
@@ -107,7 +104,10 @@ def parse_status(homework):
 
 def main():
     """Основная логика работы бота."""
-    if check_tokens():
+    token_list = check_tokens()
+    if token_list:
+        error_message = 'Предоставьте необходимые данные:{tokens}'
+        logger.critical(error_message.format(tokens=token_list))
         raise ValueError('Отсутсвуют необходимые данные')
     bot = telegram.Bot(token=TELEGRAM_TOKEN)
     timestamp = int(time.time())
